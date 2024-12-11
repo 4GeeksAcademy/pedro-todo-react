@@ -13,6 +13,7 @@ const ListComponent = () => {
   const [list, setList] = useState([])
 
   const inputPlaceHolder = 'Tip something to do'
+
   function addItemToList(text) {
     const tarea = {
       id: crypto.randomUUID(),
@@ -21,6 +22,11 @@ const ListComponent = () => {
 
     setList([...list, tarea])
   }
+function deleteItem(id){
+  console.log(id)
+  setList(list.filter((element) => element.id!==id))
+}
+
 
 
   return (<>
@@ -29,7 +35,8 @@ const ListComponent = () => {
       <Form.Control onKeyDown={(e) => {
         if (e.key === "Enter") {
           addItemToList(e.target.value);
-          e.target.value = "";
+          e.target.value=""
+         
 
       }}}
         placeholder={inputPlaceHolder}
@@ -39,9 +46,9 @@ const ListComponent = () => {
     </InputGroup>
     {list.map((element) => {
       return (
-        <div style={{width:"100% " , display:"flex" , justifyContent:"space-between"}} id={element.id}>{element.task}
+        <div key={element.id} style={{marginBottom:"5px",width:"100% " , display:"flex" , justifyContent:"space-between"}} >{element.task}
         
-        <Button variant="outline-secondary">X</Button>
+        <Button  onClick= {()=>{deleteItem(element.id)}}variant="outline-secondary"> X </Button>
         </div>
       )
 
